@@ -13,10 +13,11 @@ ARG WORKFLOW_DOWNLOAD_URL=http://sourceforge.net/projects/tigr-workflow/files/ti
 #--------------------------------------------------------------------------------
 # BASICS
 
-RUN apt-get update && apt-get install -y --no-install-recommends \
+RUN apt-get update && apt-get install -y \
 	curl \
 	&& apt-get clean autoclean \
-	&& apt-get autoremove -y
+	&& apt-get autoremove -y \
+	&& rm -rf /var/lib/apt/lists/*
 
 #--------------------------------------------------------------------------------
 # WORKFLOW -- install in /opt/workflow
@@ -30,12 +31,12 @@ RUN curl -SL $WORKFLOW_DOWNLOAD_URL -o workflow.tar.gz \
 	&& tar -xvf workflow.tar.gz -C /usr/src/workflow \
 	&& rm workflow.tar.gz \
 	&& mkdir -p /opt/workflow/server-conf \
-	&& ./deploy.sh < /tmp/workflow.deploy.answers
 	&& chmod 777 /opt/workflow/server-conf \
+	&& ./deploy.sh < /tmp/workflow.deploy.answers \
 	&& chown www-data:www-data /opt/workflow/server-conf/idfile
 COPY htc.conf /opt/workflow/server-conf
 
-RUN mkdir -p /local/services/workflow/mockserver/working \ 
+RUN mkdir -p /local/services/workflow/mockserver/working \
 	&& chmod 777 /local/services/workflow/mockserver/working
 
 #ENTRYPOINT [/opt/workflow/RunWorkflow]	# This will break Ergatis if Ergatis inherits it
