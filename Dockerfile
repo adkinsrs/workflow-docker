@@ -13,9 +13,9 @@ ARG WORKFLOW_DOWNLOAD_URL=http://sourceforge.net/projects/tigr-workflow/files/ti
 #--------------------------------------------------------------------------------
 # BASICS
 
-RUN apt-get update && apt-get install -y \
-    curl \
-    && apt-get clean autoclean \
+RUN apt-get update && apt-get install -y --no-install-recommends \
+	curl \
+	&& apt-get clean autoclean \
 	&& apt-get autoremove -y
 
 #--------------------------------------------------------------------------------
@@ -31,8 +31,7 @@ RUN curl -SL $WORKFLOW_DOWNLOAD_URL -o workflow.tar.gz \
 	&& rm workflow.tar.gz \
 	&& mkdir -p /opt/workflow/server-conf \
 	&& ./deploy.sh < /tmp/workflow.deploy.answers
-
-RUN chmod 777 /opt/workflow/server-conf \
+	&&chmod 777 /opt/workflow/server-conf \
 	&& chown www-data:www-data /opt/workflow/server-conf/idfile
 COPY htc.conf /opt/workflow/server-conf
 
