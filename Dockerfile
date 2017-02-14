@@ -30,14 +30,12 @@ COPY workflow.deploy.answers /tmp/.
 RUN curl -SL $WORKFLOW_DOWNLOAD_URL -o workflow.tar.gz \
 	&& tar -xvf workflow.tar.gz -C /usr/src/workflow \
 	&& rm workflow.tar.gz \
-	&& mkdir -p /opt/workflow/server-conf \
-	&& chmod 777 /opt/workflow/server-conf \
+	&& mkdir -m 0777 -p /opt/workflow/server-conf \
 	&& ./deploy.sh < /tmp/workflow.deploy.answers \
 	&& chown www-data:www-data /opt/workflow/server-conf/idfile
 COPY htc.conf /opt/workflow/server-conf
 
-RUN mkdir -p /local/services/workflow/mockserver/working \
-	&& chmod 777 /local/services/workflow/mockserver/working
+RUN mkdir -m 0777 -p /local/services/workflow/mockserver/working \
 
 #ENTRYPOINT [/opt/workflow/RunWorkflow]	# This will break Ergatis if Ergatis inherits it
 CMD ["/bin/bash"]
