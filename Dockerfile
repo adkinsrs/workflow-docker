@@ -35,7 +35,7 @@ RUN curl -SL $WORKFLOW_DOWNLOAD_URL -o workflow.tar.gz \
 	&& chown www-data:www-data /opt/workflow/server-conf/idfile
 COPY htc.conf /opt/workflow/server-conf
 
-RUN mkdir -m 0777 -p /local/services/workflow/mockserver/working \
+RUN mkdir -m 0777 -p /local/services/workflow/mockserver/working
 
 #ENTRYPOINT [/opt/workflow/RunWorkflow]	# This will break Ergatis if Ergatis inherits it
 CMD ["/bin/bash"]
