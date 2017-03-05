@@ -19,8 +19,8 @@ ARG WORKFLOW_DOWNLOAD_URL=http://sourceforge.net/projects/tigr-workflow/files/ti
 
 RUN apt-get -q update && apt-get -q install -y \
 	curl \
-	&& apt-get clean autoclean \
-	&& apt-get autoremove -y \
+	&& apt-get -q clean autoclean \
+	&& apt-get -q autoremove -y \
 	&& rm -rf /var/lib/apt/lists/*
 
 #--------------------------------------------------------------------------------
