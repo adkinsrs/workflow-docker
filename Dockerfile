@@ -11,13 +11,13 @@ MAINTAINER Shaun Adkins <sadkins@som.umaryland.edu>
 ARG TERM=linux
 ARG DEBIAN_FRONTEND=noninteractive
 
-ARG WORKFLOW_VERSION=3.1.5
+ARG WORKFLOW_VERSION=3.2.0
 ARG WORKFLOW_DOWNLOAD_URL=http://sourceforge.net/projects/tigr-workflow/files/tigr-workflow/wf-${WORKFLOW_VERSION}.tar.gz
 
 #--------------------------------------------------------------------------------
 # BASICS
 
-RUN apt-get update && apt-get install -y \
+RUN apt-get -q update && apt-get -q install -y \
 	curl \
 	&& apt-get clean autoclean \
 	&& apt-get autoremove -y \
