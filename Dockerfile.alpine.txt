@@ -3,7 +3,7 @@
 # Based on Alpine (minimal Linux installation)
 ############################################################
 
-FROM alpine:3.5
+FROM alpine:3.8
 
 MAINTAINER Shaun Adkins <sadkins@som.umaryland.edu>
 
@@ -17,7 +17,7 @@ ARG WORKFLOW_DOWNLOAD_URL=http://sourceforge.net/projects/tigr-workflow/files/ti
 #--------------------------------------------------------------------------------
 # BASICS
 
-RUN apk add --no-cache curl \
+RUN apk add --no-cache bash curl \
 	&& addgroup -S www-data \
 	&& adduser -S www-data www-data
 
@@ -33,7 +33,7 @@ RUN curl -SL $WORKFLOW_DOWNLOAD_URL -o workflow.tar.gz \
 	&& tar -xvf workflow.tar.gz -C /usr/src/workflow \
 	&& rm workflow.tar.gz \
 	&& mkdir -p /opt/workflow/server-conf \
-	&& ./deploy.sh < /tmp/workflow.deploy.answers \
+	&& bash deploy.sh < /tmp/workflow.deploy.answers \
 	&& chown www-data:www-data /opt/workflow/server-conf \
 	&& mkdir -m 0777 -p /local/services/workflow/mockserver/working
 COPY htc.conf /opt/workflow/server-conf

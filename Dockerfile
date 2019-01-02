@@ -35,7 +35,7 @@ RUN curl -SL $WORKFLOW_DOWNLOAD_URL -o workflow.tar.gz \
 	&& tar -xvf workflow.tar.gz -C /usr/src/workflow \
 	&& rm workflow.tar.gz \
 	&& mkdir -p /opt/workflow/server-conf \
-	&& ./deploy.sh < /tmp/workflow.deploy.answers \
+	&& bash deploy.sh < /tmp/workflow.deploy.answers \
 	&& chown www-data:www-data /opt/workflow/server-conf \
 	&& mkdir -m 0777 -p /local/services/workflow/mockserver/working
 COPY htc.conf /opt/workflow/server-conf
